@@ -7,9 +7,9 @@ public interface CarService {
 
     Car get(int id);
 
-    void create(Long id, String carModel);
+    void create(Car car);
 
-    void update(Long id, String carModel);
+    void update(Car car);
 
     void delete(Long id);
 }

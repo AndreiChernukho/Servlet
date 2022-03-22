@@ -1,6 +1,5 @@
 import entity.Car;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,15 +19,13 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void create(Long id, String carModel) {
-        Car car = new Car(id, carModel, LocalDateTime.now());
-        CAR_MAP.put(id, car);
+    public void create(Car car) {
+        CAR_MAP.put(car.getId(), car);
     }
 
     @Override
-    public void update(Long id, String carModel) {
-        Car car = new Car(id, carModel, LocalDateTime.now());
-        CAR_MAP.put(id, car);
+    public void update(Car car) {
+        CAR_MAP.put(car.getId(), car);
     }
 
     @Override

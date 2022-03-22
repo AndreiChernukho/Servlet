@@ -18,8 +18,11 @@ public class CarServlet extends HttpServlet {
     private static final String CARS_ATTRIBUTE_NAME = "cars";
     private static final String CARS_PAGE_NAME = "cars.jsp";
 
-    private final CarService carService = new CarServiceImpl();
+    private final CarService carService;
 
+    public CarServlet() {
+        carService = new CarServiceImpl();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -40,7 +43,8 @@ public class CarServlet extends HttpServlet {
         log.info("doPost start");
         Long id = Long.getLong(req.getParameter(CAR_ID_PARAMETER_NAME));
         String carModel = req.getParameter(CAR_MODEL_PARAMETER_NAME);
-        carService.create(id, carModel);
+        Car car = new Car(id,carModel,LocalDateTime.now());
+        carService.create(car);
         req.getRequestDispatcher(CARS_PAGE_NAME).forward(req, resp);
     }
 
@@ -49,7 +53,9 @@ public class CarServlet extends HttpServlet {
         log.info("doPut start");
         Long id = Long.getLong(req.getParameter(CAR_ID_PARAMETER_NAME));
         String carModel = req.getParameter(CAR_MODEL_PARAMETER_NAME);
-        carService.update(id, carModel);
+        CarServiceImpl carService = new CarServiceImpl();
+        Car car = new Car(id,carModel,carService.get(Integer.parseInt(String.valueOf(id))).getCreationDate());
+        carService.update(car);
     }
 
     @Override
